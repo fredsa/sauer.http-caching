@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 jarsExcludedFromWebInfLib=
-lastWarOutDir=/usr/local/google/home/fredsa/src/sauer.http-caching/war
+lastWarOutDir=/fred/src/sauer.http-caching/war
 warSrcDir=war
 warSrcDirIsOutput=false
