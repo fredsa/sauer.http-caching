@@ -1,4 +1,4 @@
-package com.google.cache;
+package sauer.cache;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,6 +59,16 @@ public class CacheServlet extends HttpServlet {
         resp.setHeader("Cache-Control", "public, s-maxage=" + age);
       }
     }
+    
+    String[] params = req.getParameterValues("header"); 
+    if (params != null) {
+      for (int i = 0; i < params.length; i++) {
+        int pos = params[i].indexOf(':');
+        String key = params[i].substring(0, pos).trim();
+        String value = params[i].substring(pos+1).trim();
+        resp.setHeader(key, value);
+      }
+    }
 
     resp.setContentType("text/html");
     PrintWriter writer = resp.getWriter();
@@ -68,8 +78,8 @@ public class CacheServlet extends HttpServlet {
     writer.println(df.format(now) + "<br>");
     writer.println("System.nanoTime(): " + System.nanoTime() + "<br>");
 
-    // Dump request headers if 'headers' is among the request parameters
-    if (req.getParameter("headers") != null) {
+    // Dump request headers if 'show_headers' is among the request parameters
+    if (req.getParameter("show_headers") != null) {
       writer.println("<br><b>Request Headers:</b><br>");
       for (
           @SuppressWarnings("unchecked")
@@ -98,10 +108,12 @@ public class CacheServlet extends HttpServlet {
       writer.println("<li>" + makeUrl(baseUrl + "?cache=0") + " (do not cache)</li>");
       writer.println("<li>" + makeUrl(baseUrl + "?delay=10&cache=600")
           + " (sleep for 10 seconds, then respond with 10 minute (600 seconds) cachable result)</li>");
-      writer.println("<li>" + makeUrl(baseUrl + "?delay=10&cache=600&headers=true")
+      writer.println("<li>" + makeUrl(baseUrl + "?delay=10&cache=600&show_headers=true")
           + " (echo back HTTP request headers received)</li>");
       writer.println("<li>" + makeUrl(baseUrl + "?delay=10&cache=600&size=1000")
           + " (response includes 1000 randomish characters)</li>");
+      writer.println("<li>" + makeUrl(baseUrl + "?delay=10&cache=600&size=1000&header=vary:foo&header=foo:bar")
+          + " (send two response headers 'vary: foo' and 'foo: bar')</li>");
       writer.println("</ul>");
 
       writer.println("<p><a href='static.html'>Static HTML (browser cache) test</a></p>");

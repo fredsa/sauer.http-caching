@@ -7,7 +7,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
   <servlet>
     <servlet-name>Cache</servlet-name>
-    <servlet-class>com.google.cache.CacheServlet</servlet-class>
+    <servlet-class>sauer.cache.CacheServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
