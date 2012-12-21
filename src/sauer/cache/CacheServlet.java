@@ -77,6 +77,8 @@ public class CacheServlet extends HttpServlet {
     // Timestamp which identifies when this request was served
     writer.println(df.format(now) + "<br>");
     writer.println("System.nanoTime(): " + System.nanoTime() + "<br>");
+    writer.println("<p>Source code for this app:");
+    writer.println("<a href='https://code.google.com/p/sauer.http-caching'>https://code.google.com/p/sauer.http-caching</a></p>");
 
     // Dump request headers if 'show_headers' is among the request parameters
     if (req.getParameter("show_headers") != null) {
